@@ -96,7 +96,6 @@ public class TodoList {
 				int id=rs.getInt("id");
 				String category = rs.getString("category");
 				String title = rs.getString("title");
-				title += "[V]";
 				String description = rs.getString("memo");
 				String due_date = rs.getString("due_date");
 				String current_date = rs.getString("current_date");
@@ -183,7 +182,7 @@ public class TodoList {
 			try {
 				
 				pstmt = conn.prepareStatement(sql);
-				String str = t.getTitle().substring(0,t.getTitle().length()-3);
+				String str = t.getTitle().substring(0,t.getTitle().length()-4);
 				pstmt.setString(1,str);
 				pstmt.setString(2,t.getDesc());
 				pstmt.setString(3,t.getCategory());
@@ -200,6 +199,32 @@ public class TodoList {
 			}
 			return count;
 		}
+		
+		// item 체크표시 삭제
+				public int editItem3(TodoItem t) {
+					String sql="update todolistSQL set title=?,memo=?, category=?, current_date=?, due_date=?, friend=?, material=?"+"where id = ?;";
+					PreparedStatement pstmt;
+					int count=0;
+					try {
+						
+						pstmt = conn.prepareStatement(sql);
+						String str = t.getTitle()+" [V]";
+						pstmt.setString(1,str);
+						pstmt.setString(2,t.getDesc());
+						pstmt.setString(3,t.getCategory());
+						pstmt.setString(4,t.getCurrent_date());
+						pstmt.setString(5,t.getDue_date());
+						pstmt.setString(6,t.getFriend());
+						pstmt.setString(7,t.getMaterial());
+						pstmt.setInt(8, t.getId());
+						count=pstmt.executeUpdate();
+						pstmt.close();	
+						
+					}catch(SQLException e) {
+						e.printStackTrace();
+					}
+					return count;
+				}
 
 	// item 수정
 	public int editItem(TodoItem t) {

@@ -20,14 +20,16 @@ import com.todo.dao.TodoList;
 
 public class TodoUtil {
 	
-	// item find
+	// month item find
 		public static void find_monthItem(TodoList l, String str_month) {
 			int count=0;
 			for(TodoItem item : l.month(str_month)) {
 				System.out.println(item.toString());
 				count++;
 			}
-			System.out.printf("총 %d개의 항목을 찾았습니다.\n", count);
+			System.out.println("=======================================");
+			System.out.printf("     %s월에는 총 %d개의 항목을 수행해야합니다.\n", str_month, count);
+			System.out.println("=======================================");
 			System.out.println();
 		}
 	
@@ -146,11 +148,14 @@ public class TodoUtil {
 		System.out.print("item의 새로운 내용을 입력하세요 : ");
 		String new_description = sc.nextLine().trim(); // line으로 입력받음.
 		
+		
 		System.out.print("item의 새로운 마감일자를 입력하세요 : ");
 		String new_due_date = sc.nextLine().trim(); // line으로 입력받음.
 		
+		
 		System.out.print("함께할 사람들을 입력하세요 : ");
 		String new_friend = sc.nextLine().trim(); // line으로 입력받음.
+		
 		
 		System.out.print("준비물을 입력하세요 : ");
 		String new_material = sc.nextLine().trim(); // line으로 입력받음.
@@ -230,12 +235,17 @@ public class TodoUtil {
 
 	// item들 모두 출력
 	public static void listAll(TodoList l) {
+		
+		System.out.println("===================================");
+		System.out.printf("[ 알림 ] 전체 item의 수는 %d개입니다.", l.getCount());
+		System.out.println();
+		System.out.println("===================================");
 	
-		System.out.println("===================================== [ 전체 item 목록 ] =====================================");
+		System.out.println("=============================================== [ 전체 item 목록 ] ===============================================");
 		for(TodoItem item : l.getList()) {
 			System.out.println(item.toString());
 		}
-		System.out.println("============================================================================================");
+		System.out.println("===================================================================================================================");
 		System.out.println();
 	}	
 	
@@ -260,7 +270,7 @@ public class TodoUtil {
 					System.out.println("");					
 				}
 				else {
-					if(l.editItem(item)>0) {
+					if(l.editItem3(item)>0) {
 						System.out.println("[ 알림 ] 체크를 완료하였습니다.");
 						System.out.println("");
 						}
